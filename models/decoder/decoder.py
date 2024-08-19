@@ -327,7 +327,7 @@ class TransformerDecoderLayer(nn.Module):
 
             return tgt
 
-class RTDETRTransformer(nn.Module):
+class Transformer(nn.Module):
     __share__ = ['num_classes']
 
 
@@ -355,7 +355,7 @@ class RTDETRTransformer(nn.Module):
                  eps=1e-2,
                  aux_loss=True):
 
-        super(RTDETRTransformer, self).__init__()
+        super(Transformer, self).__init__()
         assert position_embed_type in ['sine', 'learned'], \
             f'ValueError: position_embed_type not supported {position_embed_type}!'
         assert len(feat_channels) <= num_levels
@@ -680,7 +680,7 @@ def deformable_attention_core_func(value, value_spatial_shapes, sampling_locatio
     return output.permute(0, 2, 1)
 
 def build_decoder(cfg, num_classes):
-    decoder = RTDETRTransformer(num_classes = num_classes, hidden_dim = cfg['hidden_dim'], num_queries = cfg['num_queries'], \
+    decoder = Transformer(num_classes = num_classes, hidden_dim = cfg['hidden_dim'], num_queries = cfg['num_queries'], \
                                 feat_channels = cfg['feat_channels'], feat_strides = cfg['feat_strides'], \
                                 num_levels = cfg['num_levels'], num_decoder_layers = cfg['num_decoder_layers'],\
                                 num_denoising = cfg['num_denoising'], eval_spatial_size = cfg['eval_spatial_size'], eval_idx = cfg['eval_idx'])
